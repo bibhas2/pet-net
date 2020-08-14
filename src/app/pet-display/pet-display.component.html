@@ -8,4 +8,5 @@
     <label>About {{pet.name}}</label>
     <p>{{pet.description}}</p>
     <img *ngIf="pet.featured" class="featured-img" src="/assets/red-ribbon.svg"/>
+    <img class="favorite-img" [src]="getFavoriteIcon()" (click)="raiseFavoriteEvent()"/>
 </div>

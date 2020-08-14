@@ -4,5 +4,5 @@
 </div>
 
 <div class="grid" [ngClass]="{'one-col': viewMode == 'list', 'two-col': viewMode == 'grid'}">
-    <app-pet-display *ngFor="let p of pets" [pet]="p"></app-pet-display>
+    <app-pet-display *ngFor="let p of pets" [pet]="p" (toggle-favorite)="toggleFavorite($event)"></app-pet-display>
 </div>

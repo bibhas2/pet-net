@@ -7,4 +7,5 @@ export class Pet {
     public houseTrained:boolean
     public description:string
     public featured:boolean
+    public favorite:boolean = false
 }

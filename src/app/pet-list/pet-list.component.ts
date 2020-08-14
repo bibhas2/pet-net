@@ -8,7 +8,7 @@ import { Pet } from '../model/pet';
 })
 export class PetListComponent implements OnInit {
   viewMode = 'list'
-  
+
   pets:Pet[] = [
     {
       id: "P001",
@@ -18,7 +18,8 @@ export class PetListComponent implements OnInit {
       houseTrained: true,
       age: 3,
       description: "Sofie is an incredibly sweet girl",
-      featured: false
+      featured: false,
+      favorite: true
     },
     {
       id: "P002",
@@ -28,7 +29,8 @@ export class PetListComponent implements OnInit {
       houseTrained: false,
       age: 1,
       description: "Hello my name is DJ and I am a a wonderful puppy.",
-      featured: true
+      featured: true,
+      favorite: false
     },
     {
       id: "P003",
@@ -38,7 +40,8 @@ export class PetListComponent implements OnInit {
       houseTrained: true,
       age: 2,
       description: "Gaston is an adorable gray and white fluffy tabby.",
-      featured: false
+      featured: false,
+      favorite: false
     },
     {
       id: "P004",
@@ -48,13 +51,22 @@ export class PetListComponent implements OnInit {
       houseTrained: true,
       age: 5,
       description: "Blue is a sweet girl with some hoof issues.",
-      featured: false
+      featured: false,
+      favorite: false
     },
 
   ]
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  toggleFavorite(petId:string) {
+    let pet = this.pets.find(p => p.id === petId)
+
+    if (pet !== undefined) {
+      pet.favorite = !pet.favorite
+    }
   }
 
 }

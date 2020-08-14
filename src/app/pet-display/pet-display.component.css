@@ -23,7 +23,13 @@ img.featured-img {
     right: 10px;
     width: 40px;
 }
-
+img.favorite-img {
+    position: absolute;
+    top: 15rem;
+    right: 10px;
+    width: 40px;
+    cursor: pointer;    
+}
 .name {
     font-size: 1.5em;
     font-weight: bold;
