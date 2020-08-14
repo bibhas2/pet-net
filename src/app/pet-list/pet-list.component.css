@@ -1,5 +1,18 @@
 div.grid {
     display: grid;
-    grid-template-columns: 350px 350px;
     grid-gap: 10px;
+    width: 750px;
+}
+div.one-col {
+    grid-template-columns: 1fr;
+}
+div.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.view-mode img {
+    width: 25px;
+    margin: 5px;
+    cursor: pointer;
 }

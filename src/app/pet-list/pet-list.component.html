@@ -1,3 +1,8 @@
-<div class="grid">
+<div class="view-mode">
+    <img src="/assets/list-view.svg" (click)="viewMode = 'list'"/>
+    <img src="/assets/grid-view.svg" (click)="viewMode = 'grid'"/>
+</div>
+
+<div class="grid" [ngClass]="{'one-col': viewMode == 'list', 'two-col': viewMode == 'grid'}">
     <app-pet-display *ngFor="let p of pets" [pet]="p"></app-pet-display>
 </div>

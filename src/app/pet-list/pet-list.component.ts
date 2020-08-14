@@ -7,6 +7,8 @@ import { Pet } from '../model/pet';
   styleUrls: ['./pet-list.component.css']
 })
 export class PetListComponent implements OnInit {
+  viewMode = 'list'
+  
   pets:Pet[] = [
     {
       id: "P001",
