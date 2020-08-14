@@ -1,0 +1,11 @@
+<div class="card" [ngClass]="{'featured-pet': pet.featured}">
+    <img class="banner-img" [src]="pet.imageURL"/>
+    <label class="name">{{pet.name}}</label>
+    <label>Age</label>
+    <p>{{pet.age}}</p>
+    <label>House Trained</label>
+    <p>{{pet.houseTrained ? "Yes" : "No"}}</p>
+    <label>About {{pet.name}}</label>
+    <p>{{pet.description}}</p>
+    <img *ngIf="pet.featured" class="featured-img" src="/assets/red-ribbon.svg"/>
+</div>
