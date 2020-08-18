@@ -11,7 +11,8 @@ export class PetDisplayComponent implements OnInit {
   pet: Pet
   @Output("toggle-favorite")
   favoriteEventEmitter = new EventEmitter
-
+  showPopup = false
+  
   constructor() { }
 
   ngOnInit(): void {

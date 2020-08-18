@@ -9,4 +9,23 @@
     <p>{{pet.description}}</p>
     <img *ngIf="pet.featured" class="featured-img" src="/assets/red-ribbon.svg"/>
     <img class="favorite-img" [src]="getFavoriteIcon()" (click)="raiseFavoriteEvent()"/>
+    <button class="call-button" (click)="showPopup = true">
+        Ask about {{pet.name}}
+    </button>
+</div>
+
+<div class="popup" [ngStyle]="{display: showPopup ? 'block' : 'none'}">
+    <form>
+        <div class="close"><span (click)="showPopup = false">&times;</span></div>
+        <label>Name</label>
+        <input type="text"/>
+        <label>Email</label>
+        <input type="email"/>
+        <label>Your message</label>
+        <textarea>
+        </textarea>
+        <button class="call-button" (click)="showPopup = true">
+            Send Message
+        </button>
+    </form>
 </div>
