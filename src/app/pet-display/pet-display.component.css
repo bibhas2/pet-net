@@ -55,7 +55,7 @@ p, label {
 }
 
 .popup form {
-    margin-top: 15%;
+    margin-top: 5%;
     margin-left: auto;
     margin-right: auto;
     width: 400px;
@@ -64,7 +64,7 @@ p, label {
     padding: 10px;
 }
 
-.popup form input, .popup form textarea {
+.popup form input, .popup form textarea, .popup form select {
     width: 100%;
     font-size: 1.3em;
     box-sizing : border-box;
@@ -90,4 +90,18 @@ p, label {
     font-weight: bold;
     margin-left: auto;
     margin-right: auto;
+}
+
+.call-button:disabled {
+    background-color: rgba(138, 36, 138, 0.342);
+    color: gray;
+}
+
+.error {
+    font-size: 0.75em;
+    color: red;
+}
+
+.ng-invalid.ng-touched {
+    background-color: pink;
 }

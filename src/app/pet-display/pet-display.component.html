@@ -14,17 +14,28 @@
     </button>
 </div>
 
-<div class="popup" [ngStyle]="{display: showPopup ? 'block' : 'none'}">
-    <form>
+<div class="popup" *ngIf="showPopup">
+    <form ngForm #theForm="ngForm" (submit)="handleSubmit(theForm)">
         <div class="close"><span (click)="showPopup = false">&times;</span></div>
         <label>Name</label>
-        <input type="text"/>
+        <input type="text" name="clientName" ngModel #nameInput="ngModel" required minlength="3"/>
+        <p class="error" *ngIf="nameInput.invalid && nameInput.touched">Name must be minimum 3 characters.</p>
+
         <label>Email</label>
-        <input type="email"/>
+        <input type="email" name="clientEmail" ngModel required email #emailInput="ngModel"/>
+        <p class="error" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email.</p>
+
+        <label>Your country</label>
+        <select name="countryCode" [ngModel]="defaultCountry">
+            <option *ngFor="let c of countryList" [value]="c.code">{{c.name}}</option>
+        </select>
         <label>Your message</label>
-        <textarea>
+        <textarea name="messageText" [ngModel]="getDefaultMessage()">
         </textarea>
-        <button class="call-button" (click)="showPopup = true">
+        
+        <p class="error" *ngIf="theForm.invalid">Please enter all the required information.</p>
+
+        <button [disabled]="theForm.invalid" class="call-button" (click)="showPopup = true">
             Send Message
         </button>
     </form>

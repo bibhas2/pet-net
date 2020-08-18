@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {Pet} from '../model/pet'
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-pet-display',
@@ -7,12 +8,29 @@ import {Pet} from '../model/pet'
   styleUrls: ['./pet-display.component.css']
 })
 export class PetDisplayComponent implements OnInit {
+  defaultCountry = "US"
+
+  countryList = [
+    {
+      name: "USA",
+      code: "US"
+    },
+    {
+      name: "Canada",
+      code: "CA"
+    },
+    {
+      name: "Mexico",
+      code: "MX"
+    },
+  ]
+
   @Input()
   pet: Pet
   @Output("toggle-favorite")
   favoriteEventEmitter = new EventEmitter
   showPopup = false
-  
+
   constructor() { }
 
   ngOnInit(): void {
@@ -24,5 +42,13 @@ export class PetDisplayComponent implements OnInit {
   }
   raiseFavoriteEvent() {
     this.favoriteEventEmitter.emit(this.pet.id)
+  }
+
+  handleSubmit(form:NgForm) {
+    console.log(form.value)
+  }
+
+  getDefaultMessage() {
+    return `I will like more information about ${this.pet.name}.`
   }
 }
