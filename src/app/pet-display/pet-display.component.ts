@@ -46,6 +46,9 @@ export class PetDisplayComponent implements OnInit {
 
   handleSubmit(form:NgForm) {
     console.log(form.value)
+
+    //Close popup
+    this.showPopup = false
   }
 
   getDefaultMessage() {
