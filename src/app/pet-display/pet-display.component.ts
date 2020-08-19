@@ -2,13 +2,20 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {Pet} from '../model/pet'
 import { NgForm } from '@angular/forms';
 
+class AdoptionRequest {
+  clientName:string
+  clientEmail:string
+  countryCode:string
+  messageText:string
+}
+
 @Component({
   selector: 'app-pet-display',
   templateUrl: './pet-display.component.html',
   styleUrls: ['./pet-display.component.css']
 })
 export class PetDisplayComponent implements OnInit {
-  defaultCountry = "US"
+  adoptionRequest:AdoptionRequest
 
   countryList = [
     {
@@ -34,7 +41,11 @@ export class PetDisplayComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.adoptionRequest = new AdoptionRequest
+    this.adoptionRequest.countryCode = "US"
+    this.adoptionRequest.messageText = `I will like more information about ${this.pet.name}.`
   }
+
   getFavoriteIcon() : string {
     return this.pet.favorite ?
       "/assets/heart-red.svg" :
@@ -44,11 +55,9 @@ export class PetDisplayComponent implements OnInit {
     this.favoriteEventEmitter.emit(this.pet.id)
   }
 
-  handleSubmit(form:NgForm) {
-    console.log(form.value)
-  }
+  handleSubmit() {
+    console.log(this.adoptionRequest)
 
-  getDefaultMessage() {
-    return `I will like more information about ${this.pet.name}.`
+    this.showPopup = false
   }
 }
