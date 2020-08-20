@@ -15,27 +15,27 @@
 </div>
 
 <div class="popup" *ngIf="showPopup">
-    <form ngForm #theForm="ngForm" (submit)="handleSubmit(theForm)">
+    <form [formGroup]="adoptionForm" (submit)="handleSubmit()">
         <div class="close"><span (click)="showPopup = false">&times;</span></div>
         <label>Name</label>
-        <input type="text" name="clientName" [(ngModel)]="adoptionRequest.clientName" #nameInput="ngModel" required minlength="3"/>
-        <p class="error" *ngIf="nameInput.invalid && nameInput.touched">Name must be minimum 3 characters.</p>
+        <input type="text" formControlName="clientName"/>
+        <p class="error" *ngIf="adoptionForm.controls.clientName.invalid && adoptionForm.controls.clientName.touched">Name must be minimum 3 characters.</p>
 
         <label>Email</label>
-        <input type="email" name="clientEmail" [(ngModel)]="adoptionRequest.clientEmail" required email #emailInput="ngModel"/>
-        <p class="error" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email.</p>
+        <input type="email" formControlName="clientEmail"/>
+        <p class="error" *ngIf="adoptionForm.controls.clientEmail.invalid && adoptionForm.controls.clientEmail.touched">Please enter a valid email.</p>
 
         <label>Your country</label>
-        <select name="countryCode" [(ngModel)]="adoptionRequest.countryCode">
+        <select formControlName="countryCode">
             <option *ngFor="let c of countryList" [value]="c.code">{{c.name}}</option>
         </select>
         <label>Your message</label>
-        <textarea name="messageText" [(ngModel)]="adoptionRequest.messageText">
+        <textarea formControlName="messageText">
         </textarea>
         
-        <p class="error" *ngIf="theForm.invalid">Please enter all the required information.</p>
+        <p class="error" *ngIf="adoptionForm.invalid">Please enter all the required information.</p>
 
-        <button [disabled]="theForm.invalid" class="call-button">
+        <button [disabled]="adoptionForm.invalid" class="call-button" (click)="showPopup = true">
             Send Message
         </button>
     </form>
