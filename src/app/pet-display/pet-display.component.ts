@@ -30,7 +30,8 @@ export class PetDisplayComponent implements OnInit {
     
     this.adoptionForm = new FormGroup({
       clientName: new FormControl("", [Validators.required, Validators.minLength(3)]),
-      clientEmail: new FormControl("", [Validators.required, Validators.email, validateDomain(["@ibm.com", "@microsoft.com"])]),
+      clientEmail: new FormControl("", [Validators.required, Validators.email, 
+        validateDomain(["@ibm.com", "@microsoft.com"])]),
       countryCode: new FormControl("US"),
       messageText: new FormControl(`I will like more information about ${this.pet.name}`)
     })

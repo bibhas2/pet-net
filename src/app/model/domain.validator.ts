@@ -10,7 +10,9 @@ export function validateDomain(bannedDomains: string[]) {
 
         if (bannedDomains.find(d => value.toLowerCase().endsWith(d))) {
             //Invalid
-            return { valid: false, message: "Invalid domain" }
+            let message = "The following domains not allowed: " + bannedDomains.join()
+
+            return { invalidDomain: true, errorMessage: message }
         } else {
             //Valid
             return null

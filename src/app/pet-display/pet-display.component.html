@@ -24,6 +24,7 @@
         <label>Email</label>
         <input type="email" formControlName="clientEmail"/>
         <p class="error" *ngIf="adoptionForm.controls.clientEmail.invalid && adoptionForm.controls.clientEmail.touched">Please enter a valid email.</p>
+        <p class="error" *ngIf="adoptionForm.controls.clientEmail.errors?.invalidDomain && adoptionForm.controls.clientEmail.touched">{{adoptionForm.controls.clientEmail.errors.errorMessage}}.</p>
 
         <label>Your country</label>
         <select formControlName="countryCode">
