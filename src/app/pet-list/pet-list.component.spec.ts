@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PetListComponent } from './pet-list.component';
 import { PetDisplayComponent } from '../pet-display/pet-display.component';
 import { By } from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http'
 
 describe('PetListComponent', () => {
   let component: PetListComponent;
@@ -10,6 +11,7 @@ describe('PetListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientModule],
       declarations: [ 
         PetDisplayComponent, //We must add this
         PetListComponent 

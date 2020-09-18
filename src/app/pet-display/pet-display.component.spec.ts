@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PetDisplayComponent } from './pet-display.component';
 import { Pet } from '../model/pet';
 import { By } from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http'
 
 describe('PetDisplayComponent', () => {
   let component: PetDisplayComponent;
@@ -10,7 +11,8 @@ describe('PetDisplayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PetDisplayComponent ]
+      declarations: [ PetDisplayComponent ],
+      imports: [HttpClientModule]
     })
     .compileComponents();
   }));
