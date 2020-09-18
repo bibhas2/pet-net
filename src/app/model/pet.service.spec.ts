@@ -1,63 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
 import { PetService } from './pet.service';
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Pet } from './pet';
-
-class FakeAdoptionHttpClient {
-  petList:Pet[] = [
-    {
-      id: "P001",
-      name: "Sofie",
-      imageURL: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48750887/1/",
-      animalType: "Dog",
-      houseTrained: true,
-      age: 3,
-      description: "Sofie is an incredibly sweet girl",
-      featured: false,
-      favorite: false
-    },
-    {
-      id: "P002",
-      name: "DJ",
-      imageURL: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48711200/1/",
-      animalType: "Dog",
-      houseTrained: false,
-      age: 1,
-      description: "Hello my name is DJ and I am a a wonderful puppy.",
-      featured: true,
-      favorite: false
-    }
-  ]
-
-  get(url:string) : Observable<Pet[]> {
-    return of(this.petList)
-  }
-  put(url:string, body:Object) : Observable<Object> {
-    let parts = url.split("/")
-    const petId = parts[parts.length-2]
-    const pet = this.petList.find(p => p.id == petId)
-
-    if (pet != undefined) {
-      pet.favorite = body["favorite"]
-    }
-
-    return of({})
-  }
-}
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('PetService', () => {
   let service: PetService;
+  let httpTestingController: HttpTestingController
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{
-        provide: HttpClient, useClass: FakeAdoptionHttpClient
-      }]
+      imports: [HttpClientTestingModule]
     });
     service = TestBed.inject(PetService);
+    httpTestingController = TestBed.inject(HttpTestingController)
   });
 
   it('should be created', () => {
@@ -71,19 +26,72 @@ describe('PetService', () => {
 
       done()
     })
+
+    const req = httpTestingController.expectOne("http://localhost:3000/pet")
+
+    req.flush([
+      {
+        id: "P001",
+        name: "Sofie",
+        imageURL: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48750887/1/",
+        animalType: "Dog",
+        houseTrained: true,
+        age: 3,
+        description: "Sofie is an incredibly sweet girl",
+        featured: false,
+        favorite: false
+      },
+      {
+        id: "P002",
+        name: "DJ",
+        imageURL: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48711200/1/",
+        animalType: "Dog",
+        houseTrained: false,
+        age: 1,
+        description: "Hello my name is DJ and I am a a wonderful puppy.",
+        featured: true,
+        favorite: false
+      }
+    ])
   })
 
   it('Should update favorite', (done) => {
-    service.setFavorite("P001", true).subscribe(_ => {
+    const petId = "P001"
+
+    service.setFavorite(petId, true).subscribe(_ => {
       service.getAllPets().subscribe(list => {
-        const pet = list.find(p => p.id == "P001")
+        const pet = list.find(p => p.id == petId)
 
         expect(pet).toBeDefined()
         expect(pet.favorite).toBeTrue()
   
         done()
       })  
+
+      const calls = httpTestingController.match(req => {
+        return req.url == "http://localhost:3000/pet" && req.method == "GET"
+      })
+      calls[0].flush([
+        {
+          id: "P001",
+          name: "Sofie",
+          imageURL: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48750887/1/",
+          animalType: "Dog",
+          houseTrained: true,
+          age: 3,
+          description: "Sofie is an incredibly sweet girl",
+          featured: false,
+          favorite: true
+        }
+      ])
     })
+
+    const calls = httpTestingController.match(req => {
+      return req.url == `http://localhost:3000/pet/${petId}/favorite` &&
+        req.method == "PUT"
+    })
+
+    calls[0].flush({})
   })
 
 });
