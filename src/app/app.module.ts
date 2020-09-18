@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms'
 import { AppComponent } from './app.component';
 import { PetDisplayComponent } from './pet-display/pet-display.component';
 import { PetListComponent } from './pet-list/pet-list.component';
+import {HttpClientModule} from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { PetListComponent } from './pet-list/pet-list.component';
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
