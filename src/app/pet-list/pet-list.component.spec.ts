@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PetListComponent } from './pet-list.component';
 import { PetDisplayComponent } from '../pet-display/pet-display.component';
 import { By } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http'
 
 describe('PetListComponent', () => {
   let component: PetListComponent;
@@ -10,12 +11,13 @@ describe('PetListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      imports: [HttpClientModule],
+      declarations: [
         PetDisplayComponent, //We must add this
-        PetListComponent 
+        PetListComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -29,36 +31,25 @@ describe('PetListComponent', () => {
   });
 
   /**
-   * Good example use of the DebugElement API.
-   * 
-   * Causes a click on the favorite button. Expects the
-   * favorite flag to toggle after that.
+   * Checks the DOM upon initialization
    */
-  it('Should handle custom event', () => {
-    //Lookup one of the child PetDisplayComponent
-    let pd = fixture.debugElement.query(By.css("app-pet-display"))
-    
-    //Make sure we did the lookup right by checking the 
-    //class name of the child component
-    expect(pd.componentInstance.constructor.name).toBe("PetDisplayComponent")
+  it('Should have correct DOM', async(() => {
+    //Pet data is loaded asynchronously.
+    //We need to wait for stabilization
+    fixture.whenStable().then(() => {
+      //This is crucially necessary for the DOM
+      //to be fully updated after data is received.
+      fixture.detectChanges();
 
-    //Typecast the child component
-    let child : PetDisplayComponent = pd.componentInstance as PetDisplayComponent
+      //Look up all the child PetDisplayComponent
+      const debugComponents = fixture.debugElement.queryAll(By.css("app-pet-display"))
 
-    //Set the initial value of favorite so we can validate a change later
-    child.pet.favorite = true
-    //Should do this after a component state change
-    //to be safe
-    fixture.detectChanges()
+      //There are 4 pets in backend
+      expect(debugComponents.length).toBe(4)
 
-    //Lookup the favorite button
-    let favButton = pd.query(By.css(".favorite-img"))
-
-    favButton.triggerEventHandler("click", null)
-
-    fixture.detectChanges()
-
-    //favorite should now be false
-    expect(child.pet.favorite).toBeFalse()
-  })
+      //At least one component should have a pet with ID "P001"
+      const pd = debugComponents.find(dc => dc.componentInstance.pet.id == "P001")
+      expect(pd).toBeDefined()
+    })
+  }))
 });
