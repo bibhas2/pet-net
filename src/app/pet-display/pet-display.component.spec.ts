@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PetDisplayComponent } from './pet-display.component';
 import { Pet } from '../model/pet';
 import { By } from '@angular/platform-browser';
+import {validateDomain} from '../model/domain.validator'
+import { FormControl } from '@angular/forms';
 
 describe('PetDisplayComponent', () => {
   let component: PetDisplayComponent;
@@ -82,5 +84,29 @@ describe('PetDisplayComponent', () => {
 
     //Popup should be closed now
     expect(component.showPopup).toBeFalse()
+  })
+
+  it("Should catch invalid domains", () => {
+    const banned = [
+      "@ibm.com",
+      "@microsoft.com"
+    ]
+
+    const control = new FormControl("bibhas@ibm.com")
+    const result = validateDomain(banned)(control)
+
+    expect(result.invalidDomain).toBeTrue()
+  })
+
+  it("Should pass valid domains", () => {
+    const banned = [
+      "@ibm.com",
+      "@microsoft.com"
+    ]
+
+    const control = new FormControl("bibhas@gmail.com")
+    const result = validateDomain(banned)(control)
+
+    expect(result).toBeNull()
   })
 });
